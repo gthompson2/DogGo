@@ -11,6 +11,6 @@ namespace DogGo.Models
         public string Name { get; set; }
         public int NeighborhoodId { get; set; }
         public string ImageUrl { get; set; }
-        public Neighborhood Neighborhood { get; set; }
+        public Neighborhood Neighborhood { get; set; } // pulls whole neighborhood object to display the name
     }
 }

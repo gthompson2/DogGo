@@ -48,15 +48,17 @@ namespace DogGo.Controllers
         // POST: OwnersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Owner owner) // ASP.NET knows how to bind values from html forms fields to C# objects
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _ownerRepo.AddOwner(owner);
+
+                return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                return View(owner);
             }
         }
 
@@ -84,7 +86,9 @@ namespace DogGo.Controllers
         // GET: OwnersController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Owner owner = _ownerRepo.GetOwnerById(id);
+
+            return View(owner);
         }
 
         // POST: OwnersController/Delete/5

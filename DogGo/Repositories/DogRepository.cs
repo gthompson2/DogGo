@@ -32,8 +32,9 @@ namespace DogGo.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
+                    // use ISNULL() for any columns that may have null values so that you can substitute non-null data
                     cmd.CommandText = @"
-                        SELECT Id, [Name], OwnerId, Breed, Notes, ImageUrl
+                        SELECT Id, [Name], OwnerId, Breed, ISNULL(Notes, 'None') as Notes, ISNULL(ImageUrl, 'No Image') as ImageUrl
                         FROM Dog
                     ";
 
@@ -71,7 +72,7 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], OwnerId, Breed, Notes, ImageUrl
+                        SELECT Id, [Name], OwnerId, Breed, ISNULL(Notes, 'None') as Notes, ISNULL(ImageUrl, 'No Image') as ImageUrl
                         FROM Dog
                         WHERE Id = @id
                     ";

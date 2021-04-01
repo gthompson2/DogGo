@@ -94,14 +94,21 @@ namespace DogGo.Controllers
         // GET: OwnersController/Edit/5
         public ActionResult Edit(int id)
         {
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
             Owner owner = _ownerRepo.GetOwnerById(id);
-
+            // If an owner with the specified Id does not exist, return the NotFound() method
             if (owner == null)
             {
                 return NotFound();
             }
+            // If the owner with the specified Id does exist, create an OwnerFormViewModel object and return the proper view
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = owner,
+                Neighborhoods = neighborhoods
+            };
 
-            return View(owner);
+            return View(vm);
         }
 
         // POST: OwnersController/Edit/5
